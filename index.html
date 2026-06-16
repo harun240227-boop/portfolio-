@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haruka — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --white: #FFFFFF;
+      --offwhite: #F5F3EF;
+      --greige: #E8E4DF;
+      --border: #D4CFC9;
+      --text: #2D2D2D;
+      --muted: #8A8580;
+      --accent: #C4A882;
+      --poppins: 'Poppins', sans-serif;
+      --noto: 'Noto Sans JP', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--noto);
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Utility ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--poppins);
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--poppins);
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* ─── Hero ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 60px;
+      padding-top: 80px;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--poppins);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-name {
+      font-family: var(--poppins);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--text);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-name span {
+      display: block;
+      font-weight: 500;
+    }
+
+    .hero-name::after {
+      content: '';
+      display: block;
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      margin-top: 20px;
+    }
+
+    .hero-desc {
+      margin-top: 32px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 440px;
+      font-weight: 300;
+      line-height: 2;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn-primary {
+      font-family: var(--poppins);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--white);
+      background: var(--text);
+      padding: 14px 32px;
+      border-radius: 2px;
+      transition: background 0.25s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #444;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      font-family: var(--poppins);
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 14px 32px;
+      border-radius: 2px;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--muted);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--poppins);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-scroll::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .hero-bg-circle {
+      position: absolute;
+      right: -120px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--greige) 0%, transparent 70%);
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    /* ─── Section common ─── */
+    section {
+      padding: 120px 60px;
+    }
+
+    section:nth-child(even) {
+      background: var(--offwhite);
+    }
+
+    .section-label {
+      font-family: var(--poppins);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: var(--poppins);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .section-title strong {
+      font-weight: 600;
+    }
+
+    .section-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 56px;
+    }
+
+    /* ─── About ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1000px;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-weight: 300;
+      font-size: 0.97rem;
+      margin-bottom: 20px;
+      line-height: 2;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .stat {
+      padding: 28px 24px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .stat-number {
+      font-family: var(--poppins);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ─── Skills ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 900px;
+    }
+
+    .skill-card {
+      padding: 32px 28px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .skill-icon {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+
+    .skill-name {
+      font-family: var(--poppins);
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      font-family: var(--poppins);
+      color: var(--muted);
+      background: var(--offwhite);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* ─── Works ─── */
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    .work-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .work-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+
+    .work-thumb {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-thumb.purple {
+      background: linear-gradient(135deg, #EDE8F5 0%, #D8CEF0 100%);
+    }
+
+    .work-thumb.peach {
+      background: linear-gradient(135deg, #F5EEE8 0%, #F0D8CE 100%);
+    }
+
+    .work-thumb.sage {
+      background: linear-gradient(135deg, #E8F0EC 0%, #CEDFD8 100%);
+    }
+
+    .work-body {
+      padding: 28px 28px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .work-meta {
+      font-family: var(--poppins);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .work-title {
+      font-family: var(--poppins);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .work-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.9;
+      font-weight: 300;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    .work-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* ─── Contact ─── */
+    .contact-inner {
+      max-width: 560px;
+    }
+
+    .contact-inner p {
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 2;
+      margin-bottom: 40px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--poppins);
+      font-size: 0.88rem;
+      color: var(--text);
+      text-decoration: none;
+      padding: 18px 24px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.25s, background 0.25s, transform 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      background: var(--offwhite);
+      transform: translateX(6px);
+    }
+
+    .contact-link-icon {
+      font-size: 1.1rem;
+    }
+
+    .contact-link-arrow {
+      margin-left: auto;
+      font-family: var(--poppins);
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      padding: 40px 60px;
+      background: var(--text);
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-family: var(--poppins);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-logo {
+      font-family: var(--poppins);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      nav {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        gap: 20px;
+      }
+
+      #hero {
+        padding: 100px 24px 60px;
+      }
+
+      .hero-scroll {
+        left: 24px;
+      }
+
+      .hero-bg-circle {
+        width: 300px;
+        height: 300px;
+        right: -80px;
+      }
+
+      section {
+        padding: 80px 24px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 32px 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-outline {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#hero" class="nav-logo">Haruka</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-bg-circle"></div>
+    <p class="hero-eyebrow fade-in">Engineer & Creator</p>
+    <h1 class="hero-name fade-in" style="transition-delay:0.1s">
+      Hello, I'm
+      <span>Haruka.</span>
+    </h1>
+    <p class="hero-desc fade-in" style="transition-delay:0.2s">
+    </p>
+    <div class="hero-cta fade-in" style="transition-delay:0.3s">
+      <a href="#works" class="btn-primary">View Works</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <p class="section-label fade-in">About</p>
+    <h2 class="section-title fade-in">私について<br><strong>Who I am</strong></h2>
+    <div class="section-divider fade-in"></div>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>はじめまして、はるかです。
+
+        課題解決につながるシステムやサービスづくりに興味があり、業務や個人開発を通して開発に取り組んでいます。</p>
+        <p>現在はHTML、CSS、JavaScript、Firebaseを用いたWebアプリを制作しており、リアルタイム通信を利用したゲームアプリの開発にも挑戦しています。</p>
+        <p>使う人の視点を大切にしながら、価値のあるサービスや仕組みづくりに携わっていきたいと考えています。</p>
+      </div>
+      <div class="about-stats fade-in" style="transition-delay:0.15s">
+        <div class="stat">
+          <div class="stat-number">22</div>
+          <div class="stat-label">歳 / Age</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">1yr</div>
+          <div class="stat-label">開発経験</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">個人プロジェクト</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">コーヒーへの愛</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <p class="section-label fade-in">Skills</p>
+    <h2 class="section-title fade-in">できること<br><strong>What I do</strong></h2>
+    <div class="section-divider fade-in"></div>
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">Frontend</div>
+        <div class="skill-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Responsive</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in" style="transition-delay:0.1s">
+        <div class="skill-icon">🔥</div>
+        <div class="skill-name">Backend / DB</div>
+        <div class="skill-tags">
+          <span class="tag">Firebase</span>
+          <span class="tag">Realtime DB</span>
+          <span class="tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in" style="transition-delay:0.2s">
+        <div class="skill-icon">🎨</div>
+        <div class="skill-name">UI / Design</div>
+        <div class="skill-tags">
+          <span class="tag">Figma</span>
+          <span class="tag">CSS Animation</span>
+          <span class="tag">Mobile UI</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in" style="transition-delay:0.05s">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name">Tools</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">VS Code</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in" style="transition-delay:0.15s">
+        <div class="skill-icon">📱</div>
+        <div class="skill-name">Multiplayer / RT</div>
+        <div class="skill-tags">
+          <span class="tag">WebSocket</span>
+          <span class="tag">Firebase RT</span>
+          <span class="tag">Room 管理</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in" style="transition-delay:0.25s">
+        <div class="skill-icon">✏️</div>
+        <div class="skill-name">Learning</div>
+        <div class="skill-tags">
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Node.js</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Works -->
+  <section id="works">
+    <p class="section-label fade-in">Works</p>
+    <h2 class="section-title fade-in">制作物<br><strong>Selected Works</strong></h2>
+    <div class="section-divider fade-in"></div>
+    <div class="works-grid">
+
+      <a class="work-card fade-in" href="#" onclick="return false;">
+        <div class="work-thumb purple">🐺</div>
+        <div class="work-body">
+          <p class="work-meta">Web App · 2024–2025</p>
+          <h3 class="work-title">ワードウルフ<br>マルチプレイヤーゲーム</h3>
+          <p class="work-desc">リアルタイム通信を使ったパーティーゲームアプリ。ルーム作成・参加、投票、結果表示まで実装。モバイル対応のUIにもこだわりました。</p>
+          <div class="work-stack">
+            <span class="tag">HTML/CSS/JS</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">Realtime DB</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="work-card fade-in" href="#" style="transition-delay:0.1s" onclick="return false;">
+        <div class="work-thumb peach">📋</div>
+        <div class="work-body">
+          <p class="work-meta">Web App · 2024</p>
+          <h3 class="work-title">タスク管理アプリ</h3>
+          <p class="work-desc">シンプルで使いやすいタスク管理ツール。ドラッグ&ドロップによる優先度変更と、カテゴリ別フィルタリング機能を実装しています。</p>
+          <div class="work-stack">
+            <span class="tag">JavaScript</span>
+            <span class="tag">LocalStorage</span>
+            <span class="tag">CSS Grid</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="work-card fade-in" href="#" style="transition-delay:0.2s" onclick="return false;">
+        <div class="work-thumb sage">🌿</div>
+        <div class="work-body">
+          <p class="work-meta">Landing Page · 2024</p>
+          <h3 class="work-title">カフェ LP デザイン</h3>
+          <p class="work-desc">架空のカフェブランドのランディングページ。スクロールアニメーションと自然素材を感じさせる配色にこだわりました。</p>
+          <div class="work-stack">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS Animation</span>
+            <span class="tag">Figma</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <p class="section-label fade-in">Contact</p>
+    <h2 class="section-title fade-in">お気軽に<br><strong>Get in Touch</strong></h2>
+    <div class="section-divider fade-in"></div>
+    <div class="contact-inner">
+      <p class="fade-in">
+        お仕事のご相談、コラボのご提案、技術的なお話など、なんでも気軽にご連絡ください。返信は基本的に 1–2 営業日以内にしています。
+      </p>
+      <div class="contact-links">
+        <a href="mailto:haruka@example.com" class="contact-link fade-in">
+          <span class="contact-link-icon">✉️</span>
+          <span>haruka@example.com</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://github.com/" target="_blank" class="contact-link fade-in" style="transition-delay:0.1s">
+          <span class="contact-link-icon">🐙</span>
+          <span>GitHub</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+        <a href="https://twitter.com/" target="_blank" class="contact-link fade-in" style="transition-delay:0.2s">
+          <span class="contact-link-icon">𝕏</span>
+          <span>Twitter / X</span>
+          <span class="contact-link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <a href="#hero" class="footer-logo">Haruka</a>
+    <span>© 2025 Haruka. All rights reserved.</span>
+  </footer>
+
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Nav active state
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--text)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
