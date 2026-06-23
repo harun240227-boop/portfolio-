@@ -304,6 +304,16 @@
       gap: 32px;
     }
 
+    .stat:last-child {
+      grid-column: 1 / -1;
+      /* 2列分の幅いっぱいに広がる */
+      max-width: calc(50% - 16px);
+      width: calc(50% - 16px);
+      /* 上の四角と同じ幅に制限 */
+      margin: 0 auto;
+      /* 真ん中に配置 */
+    }
+
     .stat {
       padding: 28px 24px;
       background: var(--white);
@@ -659,10 +669,6 @@
         <div class="stat">
           <div class="stat-number">3+</div>
           <div class="stat-label">個人プロジェクト</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">∞</div>
-          <div class="stat-label">コーヒーへの愛</div>
         </div>
       </div>
     </div>
